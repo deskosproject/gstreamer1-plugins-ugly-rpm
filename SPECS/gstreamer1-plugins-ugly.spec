@@ -1,13 +1,13 @@
 Summary:        GStreamer 1.0 streaming media framework "ugly" plug-ins
 Name:           gstreamer1-plugins-ugly
-Version:        1.0.6
-Release:        2%{?dist}
+Version:        1.4.5
+Release:        1%{?dist}
 License:        LGPLv2+
 Group:          Applications/Multimedia
 URL:            http://gstreamer.freedesktop.org/
 Source0:        http://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-%{version}.tar.xz
-BuildRequires:  gstreamer1-devel >= 1.0.0
-BuildRequires:  gstreamer1-plugins-base-devel >= 1.0.0
+BuildRequires:  gstreamer1-devel >= 1.4.5
+BuildRequires:  gstreamer1-plugins-base-devel >= 1.4.5
 BuildRequires:  gettext-devel gtk-doc
 %if 0%{?fedora} <= 17
 BuildRequires:  libsidplay-devel >= 1.36.0
@@ -16,7 +16,6 @@ BuildRequires:  a52dec-devel >= 0.7.3
 BuildRequires:  libdvdread-devel >= 0.9.0
 BuildRequires:  lame-devel >= 3.89
 BuildRequires:  libid3tag-devel >= 0.15.0
-BuildRequires:  libmad-devel >= 0.15.0
 BuildRequires:  mpeg2dec-devel >= 0.4.0
 BuildRequires:  orc-devel >= 0.4.5
 BuildRequires:  libcdio-devel >= 0.82
@@ -58,9 +57,10 @@ be shipped in gstreamer-plugins-good because:
 
 %build
 %configure \
-    --with-package-name="gst-plugins-ugly 1.0 rpmfusion rpm" \
-    --with-package-origin="http://rpmfusion.org/" \
+    --with-package-name="DeskOS GStreamer-plugins-ugly package" \
+    --with-package-origin="https://deskosproject.org/" \
     --enable-debug --enable-gtk-doc \
+    --disable-mad \
     --disable-static
 make %{?_smp_mflags}
 
@@ -72,7 +72,8 @@ rm $RPM_BUILD_ROOT%{_libdir}/gstreamer-1.0/*.la
 
 
 %files -f gst-plugins-ugly-1.0.lang
-%doc AUTHORS COPYING README REQUIREMENTS
+%doc AUTHORS README REQUIREMENTS
+%license COPYING
 %{_datadir}/gstreamer-1.0
 # Plugins without external dependencies
 %{_libdir}/gstreamer-1.0/libgstasf.so
@@ -87,7 +88,6 @@ rm $RPM_BUILD_ROOT%{_libdir}/gstreamer-1.0/*.la
 %{_libdir}/gstreamer-1.0/libgstcdio.so
 %{_libdir}/gstreamer-1.0/libgstdvdread.so
 %{_libdir}/gstreamer-1.0/libgstlame.so
-%{_libdir}/gstreamer-1.0/libgstmad.so
 %{_libdir}/gstreamer-1.0/libgstmpeg2dec.so
 %if 0%{?fedora} <= 17
 %{_libdir}/gstreamer-1.0/libgstsid.so
@@ -101,6 +101,11 @@ rm $RPM_BUILD_ROOT%{_libdir}/gstreamer-1.0/*.la
 
 
 %changelog
+* Thu Nov 17 2016 Ricardo Arguello <rarguello@deskosproject.org> - 1.4.5-1
+- Rebuilt for DeskOS
+- Upgrade to release 1.4.5
+- Disable mad to use mpg123 in gstreamer1-plugins-bad-freeworld
+
 * Tue May 07 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.0.6-2
 - Rebuilt for x264
 
